@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запись на экскурсию</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .checkbox-group, .radio-group {
+            margin: 10px 0;
+        }
+        .checkbox-group label, .radio-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .required {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>📅 Запись на экскурсию</h1>
+        
+        <form action="/process.php" method="POST">
+            <!-- Текстовое поле: Имя -->
+            <div class="form-group">
+                <label for="name">Имя и фамилия <span class="required">*</span></label>
+                <input type="text" id="name" name="name" required placeholder="Введите ваше имя и фамилию">
+            </div>
+
+            <!-- Поле для даты: Дата экскурсии -->
+            <div class="form-group">
+                <label for="date">Дата экскурсии <span class="required">*</span></label>
+                <input type="date" id="date" name="excursion_date" required>
+            </div>
+
+            <!-- Выпадающий список: Маршрут -->
+            <div class="form-group">
+                <label for="route">Выберите маршрут <span class="required">*</span></label>
+                <select id="route" name="route" required>
+                    <option value="">-- Выберите маршрут --</option>
+                    <option value="historical">Исторический центр города</option>
+                    <option value="museum">Музейный квартал</option>
+                    <option value="nature">Природный заповедник</option>
+                    <option value="architectural">Архитектурный тур</option>
+                    <option value="gastronomic">Гастрономическая экскурсия</option>
+                </select>
+            </div>
+
+            <!-- Чекбокс: Аудиогид -->
+            <div class="form-group">
+                <label>Дополнительные услуги:</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="audio_guide" value="yes">
+                        🎧 Аудиогид (+200 руб.)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Радио-кнопки: Язык экскурсии -->
+            <div class="form-group">
+                <label>Язык экскурсии <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="language" value="russian" required>
+                        🇷🇺 Русский
+                    </label>
+                </div>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="language" value="english">
+                        🇬🇧 Английский
+                    </label>
+                </div>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="language" value="german">
+                        🇩🇪 Немецкий
+                    </label>
+                </div>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="language" value="french">
+                        🇫🇷 Французский
+                    </label>
+                </div>
+            </div>
+
+            <!-- Поле для email -->
+            <div class="form-group">
+                <label for="email">Email для подтверждения <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+            </div>
+
+            <!-- Кнопка отправки -->
+            <button type="submit" class="submit-btn">📋 Записаться на экскурсию</button>
+        </form>
+    </div>
+
+    <script>
+        // Установка минимальной даты (сегодня)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').min = today;
+    </script>
+</body>
+</html>
