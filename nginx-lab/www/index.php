@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -42,25 +40,46 @@ session_start();
             background: white;
             border-radius: 4px;
         }
+        .nav-links {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .nav-links a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <h1>Добро пожаловать в систему записи на экскурсии</h1>
     
-    <div class="menu">
-        <h2>Меню:</h2>
-        <a href="/form.html" class="btn">📝 Записаться на экскурсию</a>
+    <div class="nav-links">
+        <a href="form.html">Заполнить форму</a> |
+        <a href="view.php">Посмотреть все данные</a>
     </div>
 
-    <?php if (isset($_SESSION['name'])): ?>
+    <?php if(isset($_SESSION['name'])): ?>
     <div class="session-data">
         <h3>✅ Данные из сессии:</h3>
-        <div class="field"><strong>Имя:</strong> <?php echo $_SESSION['name']; ?></div>
-        <div class="field"><strong>Дата экскурсии:</strong> <?php echo $_SESSION['excursion_date']; ?></div>
-        <div class="field"><strong>Маршрут:</strong> <?php echo $_SESSION['route']; ?></div>
-        <div class="field"><strong>Аудиогид:</strong> <?php echo $_SESSION['audio_guide']; ?></div>
-        <div class="field"><strong>Язык экскурсии:</strong> <?php echo $_SESSION['language']; ?></div>
-        <div class="field"><strong>Email:</strong> <?php echo $_SESSION['email']; ?></div>
+        <ul>
+            <li><strong>Имя:</strong> <?= $_SESSION['name'] ?></li>
+            <li><strong>Дата экскурсии:</strong> <?= $_SESSION['excursion_date'] ?></li>
+            <li><strong>Маршрут:</strong> <?= $_SESSION['route'] ?></li>
+            <li><strong>Аудиогид:</strong> <?= $_SESSION['audio_guide'] ?></li>
+            <li><strong>Язык экскурсии:</strong> <?= $_SESSION['language'] ?></li>
+            <li><strong>Email:</strong> <?= $_SESSION['email'] ?></li>
+        </ul>
+    </div>
+    <?php else: ?>
+    <div class="session-data">
+        <p>Данных пока нет.</p>
     </div>
     <?php endif; ?>
 
