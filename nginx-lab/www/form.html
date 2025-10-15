@@ -169,9 +169,9 @@
             // Получаем данные формы
             const name = this.name.value;
             const date = this.excursion_date.value;
-            const route = this.route.value;
+            const route = this.route.options[this.route.selectedIndex].text;
             const audioGuide = this.audio_guide.checked ? 'Да' : 'Нет';
-            const language = this.language.value;
+            const language = this.querySelector('input[name="language"]:checked')?.value || 'Не выбран';
             const email = this.email.value;
 
             // Показываем данные в alert перед отправкой
