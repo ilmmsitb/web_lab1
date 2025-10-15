@@ -17,6 +17,10 @@ $_SESSION['audio_guide'] = $audio_guide;
 $_SESSION['language'] = $language;
 $_SESSION['email'] = $email;
 
+// Сохраняем ВСЕ данные в файл data.txt
+$line = $name . ";" . $excursion_date . ";" . $route . ";" . $audio_guide . ";" . $language . ";" . $email . "\n";
+file_put_contents("data.txt", $line, FILE_APPEND);
+
 // После сохранения в сессию перенаправляем обратно на главную страницу
 header("Location: index.php");
 exit();
