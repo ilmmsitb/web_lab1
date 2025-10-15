@@ -49,6 +49,10 @@
             <p>Данные из сессии:</p>
             <ul>
                 <li>Имя: <?= $_SESSION['name'] ?></li>
+                <li>Дата экскурсии: <?= $_SESSION['excursion_date'] ?></li>
+                <li>Маршрут: <?= $_SESSION['route'] ?></li>
+                <li>Аудиогид: <?= $_SESSION['audio_guide'] ?></li>
+                <li>Язык экскурсии: <?= $_SESSION['language'] ?></li>
                 <li>Email: <?= $_SESSION['email'] ?></li>
             </ul>
         </div>
