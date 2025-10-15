@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Получаем данные формы и сохраняем в сессию
+// Получаем данные формы
 $name = htmlspecialchars($_POST['name']);
 $excursion_date = htmlspecialchars($_POST['excursion_date']);
 $route = htmlspecialchars($_POST['route']);
@@ -17,11 +17,18 @@ $_SESSION['audio_guide'] = $audio_guide;
 $_SESSION['language'] = $language;
 $_SESSION['email'] = $email;
 
-// Сохраняем данные в файл data.txt
-$line = $name . ";" . $excursion_date . ";" . $route . ";" . $audio_guide . ";" . $language . ";" . $email . "\n";
-file_put_contents("data.txt", $line, FILE_APPEND);
+// Формируем строку для сохранения
+$line = $name . ";" . $excursion_date . ";" . $route . ";" . $audio_guide . ";" . $language . ";" . $email . ";" . date('Y-m-d H:i:s') . "\n";
 
-// Перенаправляем обратно на главную страницу
+// Сохраняем в файл (файл создастся автоматически)
+$result = file_put_contents('data.txt', $line, FILE_APPEND);
+
+// Если не получилось, пробуем с полным путем
+if ($result === false) {
+    $result = file_put_contents(__DIR__ . '/data.txt', $line, FILE_APPEND);
+}
+
+// Перенаправляем обратно
 header("Location: index.php");
 exit();
 ?>
