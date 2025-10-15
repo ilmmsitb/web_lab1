@@ -34,6 +34,13 @@
         .nav-links a:hover {
             text-decoration: underline;
         }
+        .errors {
+            background: #ffeaea;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #e74c3c;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +50,17 @@
         <a href="form.html">Заполнить форму</a> |
         <a href="view.php">Посмотреть все данные</a>
     </div>
+
+    <?php if(isset($_SESSION['errors'])): ?>
+        <div class="errors">
+            <ul style="color:red;">
+                <?php foreach($_SESSION['errors'] as $error): ?>
+                    <li><?= $error ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <?php unset($_SESSION['errors']); ?>
+        </div>
+    <?php endif; ?>
 
     <?php if(isset($_SESSION['name'])): ?>
         <div class="session-data">
