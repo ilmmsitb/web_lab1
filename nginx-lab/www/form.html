@@ -164,18 +164,19 @@
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('date').min = today;
 
-        // Обработчик отправки формы - только alert
+        // Обработчик отправки формы - ТОЛЬКО alert
         document.getElementById("excursionForm").addEventListener("submit", function(e) {
             // Получаем данные формы
-            const name = this.name.value;
-            const date = this.excursion_date.value;
-            const route = this.route.options[this.route.selectedIndex].text;
-            const audioGuide = this.audio_guide.checked ? 'Да' : 'Нет';
-            const language = this.querySelector('input[name="language"]:checked')?.value || 'Не выбран';
-            const email = this.email.value;
+            const name = document.querySelector("[name='name']").value;
+            const date = document.querySelector("[name='excursion_date']").value;
+            const routeSelect = document.querySelector("[name='route']");
+            const route = routeSelect.options[routeSelect.selectedIndex].text;
+            const audioGuide = document.querySelector("[name='audio_guide']").checked ? 'Да' : 'Нет';
+            const language = document.querySelector("[name='language']:checked") ? document.querySelector("[name='language']:checked").value : 'Не выбран';
+            const email = document.querySelector("[name='email']").value;
 
             // Показываем данные в alert перед отправкой
-            alert(`Проверьте введенные данные:\n\nИмя: ${name}\nДата: ${date}\nМаршрут: ${route}\nАудиогид: ${audioGuide}\nЯзык: ${language}\nEmail: ${email}`);
+            alert("Вы ввели:\n\nИмя: " + name + "\nДата: " + date + "\nМаршрут: " + route + "\nАудиогид: " + audioGuide + "\nЯзык: " + language + "\nEmail: " + email);
             
             // Форма продолжит отправку на сервер после закрытия alert
         });
