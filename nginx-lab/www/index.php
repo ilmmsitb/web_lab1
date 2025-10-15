@@ -61,8 +61,7 @@
     <h1>Добро пожаловать в систему записи на экскурсии</h1>
     
     <div class="nav-links">
-        <a href="form.html">Заполнить форму</a> |
-        <a href="view.php">Посмотреть все данные</a>
+        <a href="form.html">Заполнить форму</a>
     </div>
 
     <?php if(isset($_SESSION['name'])): ?>
