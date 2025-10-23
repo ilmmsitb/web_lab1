@@ -52,6 +52,11 @@
             background: #fff8e1;
             border-left: 5px solid #ff9800;
         }
+        .noise-image {
+            max-width: 300px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -92,19 +97,17 @@
     <?php endif; ?>
 
     <?php
-    // API данные
-    if (isset($_SESSION['api_data'])) {
-        echo "<div class='api-data'>";
-        echo "<h3>Данные из API (Случайный шум):</h3>";
-        if (isset($_SESSION['api_data']['success']) && $_SESSION['api_data']['success']) {
-            echo "<p><strong>Цвет:</strong> " . ($_SESSION['api_data']['hex'] ?? 'N/A') . "</p>";
-            echo "<p><strong>URI изображения:</strong> " . ($_SESSION['api_data']['uri'] ?? 'N/A') . "</p>";
-            echo "<img src='" . ($_SESSION['api_data']['uri'] ?? '') . "' alt='Случайный шум' style='max-width: 300px;'>";
-        } else {
-            echo "<p>Ошибка получения данных API</p>";
-        }
-        echo "</div>";
-    }
+    // Белый шум - всегда показываем изображение
+    $colors = ['FFFFFF', 'FF0000', '00FF00', '0000FF', 'FFFF00', 'FF00FF', '00FFFF'];
+    $randomColor = $colors[array_rand($colors)];
+    $noiseUrl = "https://php-noise.com/noise.php?hex=$randomColor";
+    
+    echo "<div class='api-data'>";
+    echo "<h3>Случайный шум:</h3>";
+    echo "<p><strong>Цвет:</strong> #$randomColor</p>";
+    echo "<img src='$noiseUrl' alt='Случайный шум' class='noise-image'>";
+    echo "<p><small>Изображение генерируется сервисом <a href='https://php-noise.com/' target='_blank'>php-noise.com</a></small></p>";
+    echo "</div>";
     ?>
 
     <?php
