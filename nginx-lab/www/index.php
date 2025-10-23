@@ -41,6 +41,17 @@
             border-left: 5px solid #e74c3c;
             margin: 20px 0;
         }
+        .api-data, .user-info, .cookie-info {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #3498db;
+        }
+        .cookie-info {
+            background: #fff8e1;
+            border-left: 5px solid #ff9800;
+        }
     </style>
 </head>
 <body>
@@ -79,6 +90,44 @@
             <p>Данных пока нет.</p>
         </div>
     <?php endif; ?>
+
+    <?php
+    // API данные
+    if (isset($_SESSION['api_data'])) {
+        echo "<div class='api-data'>";
+        echo "<h3>Данные из API (Случайный шум):</h3>";
+        if (isset($_SESSION['api_data']['success']) && $_SESSION['api_data']['success']) {
+            echo "<p><strong>Цвет:</strong> " . ($_SESSION['api_data']['hex'] ?? 'N/A') . "</p>";
+            echo "<p><strong>URI изображения:</strong> " . ($_SESSION['api_data']['uri'] ?? 'N/A') . "</p>";
+            echo "<img src='" . ($_SESSION['api_data']['uri'] ?? '') . "' alt='Случайный шум' style='max-width: 300px;'>";
+        } else {
+            echo "<p>Ошибка получения данных API</p>";
+        }
+        echo "</div>";
+    }
+    ?>
+
+    <?php
+    // Информация о пользователе
+    require_once 'UserInfo.php';
+    $info = UserInfo::getInfo();
+    echo "<div class='user-info'>";
+    echo "<h3>Информация о пользователе:</h3>";
+    foreach ($info as $key => $val) {
+        echo htmlspecialchars($key) . ': ' . htmlspecialchars($val) . '<br>';
+    }
+    echo "</div>";
+    ?>
+
+    <?php
+    // Информация о куки
+    if (isset($_COOKIE['last_submission'])) {
+        echo "<div class='cookie-info'>";
+        echo "<h3>Информация о последней отправке формы:</h3>";
+        echo "<p>Последняя отправка формы: " . htmlspecialchars($_COOKIE['last_submission']) . "</p>";
+        echo "</div>";
+    }
+    ?>
 
     <div class="server-info">
         <h3>Информация о сервере:</h3>
