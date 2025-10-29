@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+require_once 'db.php';
+require_once 'Excursion.php';
+
+$excursion = new Excursion($pdo);
+$all_excursions = $excursion->getAll();
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,16 +15,20 @@
     <style>
         body { 
             font-family: Arial, sans-serif; 
-            max-width: 800px; 
+            max-width: 1000px; 
             margin: 0 auto; 
             padding: 20px; 
         }
-        .session-data {
+        .session-data, .mysql-data, .api-data, .user-info, .cookie-info {
             background: #e8f5e8;
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
             border-left: 5px solid #4caf50;
+        }
+        .mysql-data {
+            background: #e8f5ff;
+            border-left: 5px solid #2196f3;
         }
         .nav-links {
             margin: 20px 0;
@@ -41,11 +52,8 @@
             border-left: 5px solid #e74c3c;
             margin: 20px 0;
         }
-        .api-data, .user-info, .cookie-info {
+        .api-data {
             background: #f0f8ff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
             border-left: 5px solid #3498db;
         }
         .cookie-info {
@@ -56,6 +64,19 @@
             max-width: 300px;
             border: 1px solid #ccc;
             margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
@@ -80,7 +101,7 @@
 
     <?php if(isset($_SESSION['name'])): ?>
         <div class="session-data">
-            <p>Данные из сессии:</p>
+            <h3>Данные из сессии (последняя запись):</h3>
             <ul>
                 <li>Имя: <?= $_SESSION['name'] ?></li>
                 <li>Дата экскурсии: <?= $_SESSION['excursion_date'] ?></li>
@@ -92,12 +113,44 @@
         </div>
     <?php else: ?>
         <div class="session-data">
-            <p>Данных пока нет.</p>
+            <p>Данных в сессии пока нет.</p>
         </div>
     <?php endif; ?>
 
+    <div class="mysql-data">
+        <h3>Данные из MySQL (все записи):</h3>
+        <?php if(!empty($all_excursions)): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Дата</th>
+                        <th>Маршрут</th>
+                        <th>Аудиогид</th>
+                        <th>Язык</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($all_excursions as $exc): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($exc['name']) ?></td>
+                        <td><?= $exc['excursion_date'] ?></td>
+                        <td><?= htmlspecialchars($exc['route']) ?></td>
+                        <td><?= $exc['audio_guide'] ?></td>
+                        <td><?= htmlspecialchars($exc['language']) ?></td>
+                        <td><?= htmlspecialchars($exc['email']) ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>Записей в базе данных пока нет.</p>
+        <?php endif; ?>
+    </div>
+
     <?php
-    // Белый шум - всегда показываем изображение
+    // Белый шум
     $colors = ['FFFFFF', 'FF0000', '00FF00', '0000FF', 'FFFF00', 'FF00FF', '00FFFF'];
     $randomColor = $colors[array_rand($colors)];
     $noiseUrl = "https://php-noise.com/noise.php?hex=$randomColor";
