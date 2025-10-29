@@ -1,3 +1,4 @@
 Минакова Анна;xolodanyuta@yandex.ru
 Минакова Анна;2025-10-30;museum;Да;english;xolodanyuta@yandex.ru
 йцуцй ;11212-12-12;museum;Да;russian;pavel.img@gmail.com
+Анна Минакова;2025-11-01;architectural;Да;english;xolodanyuta@yandex.ru
